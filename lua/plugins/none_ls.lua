@@ -5,9 +5,12 @@ return {
   },
   config = function()
     local null_ls = require("null-ls")
-    local diagnostics = null_ls.builtins.diagnostics
     local formatting = null_ls.builtins.formatting
+    local diagnostics = null_ls.builtins.diagnostics
     local completion = null_ls.builtins.completion
+
+    -- Explicitly load eslint_d from extras
+    local eslint_d = require("none-ls.diagnostics.eslint_d")
 
     local sources = {
       formatting.stylua,
@@ -15,16 +18,8 @@ return {
       diagnostics.rubocop,
       formatting.rubocop,
       formatting.prettier,
+      eslint_d.with({ only_local = "node_modules/.bin" }),
     }
-
-    -- Only add eslint_d if it's defined
-    local ok, eslint_d = pcall(function()
-      return diagnostics.eslint_d
-    end)
-
-    if ok and eslint_d then
-      table.insert(sources, eslint_d.with({ only_local = "node_modules/.bin" }))
-    end
 
     null_ls.setup({ sources = sources })
 

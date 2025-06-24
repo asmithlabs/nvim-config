@@ -27,6 +27,10 @@ require("lazy").setup({
     -- import your plugins
     { import = "plugins" },
   },
+  change_detection = {
+   eneabled = true,
+   notify = false,
+  },
   ui = {
   -- width: 80 columns, or 0.8 for 80% of your window
   size = { width = 0.8, height = 0.8 },
